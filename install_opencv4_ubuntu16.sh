@@ -31,22 +31,19 @@ sudo apt -y remove x264 libx264-dev
 ## Install dependencies
 sudo apt -y install build-essential checkinstall cmake pkg-config yasm
 sudo apt -y install git gfortran
-sudo apt -y install libjpeg8-dev libpng-dev
+sudo apt -y install libjpeg8-dev libjasper-dev libpng12-dev
  
-sudo apt -y install software-properties-common
-sudo add-apt-repository "deb http://security.ubuntu.com/ubuntu xenial-security main"
-sudo apt -y update
+sudo apt -y install libtiff5-dev
  
-sudo apt -y install libjasper1
 sudo apt -y install libtiff-dev
  
 sudo apt -y install libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev
 sudo apt -y install libxine2-dev libv4l-dev
 cd /usr/include/linux
 sudo ln -s -f ../libv4l1-videodev.h videodev.h
-cd "$cwd"
+cd $cwd
  
-sudo apt -y install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
+sudo apt -y install libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
 sudo apt -y install libgtk2.0-dev libtbb-dev qt5-default
 sudo apt -y install libatlas-base-dev
 sudo apt -y install libfaac-dev libmp3lame-dev libtheora-dev
@@ -133,6 +130,6 @@ py3binPath=$(find $cwd/installation/OpenCV-$cvVersion/lib/ -type f -name "cv2.cp
 cd ~/.virtualenvs/OpenCV-$cvVersion-py2/lib/python2.7/site-packages/
 ln -f -s $py2binPath cv2.so
  
-cd ~/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.6/site-packages/
+cd ~/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.5/site-packages/
 ln -f -s $py3binPath cv2.so
 
