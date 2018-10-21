@@ -3,6 +3,7 @@ Read, write (particularly H.264 encoding) and display video using OpenCV
 
 See https://www.learnopencv.com/read-write-and-display-a-video-using-opencv-cpp-python/
 
+## Install opencv-python package that does not support H.264
 Prerequisites
 
 Create a virtualevn:
@@ -24,8 +25,9 @@ $ source _venv3.6/bin/activate
 
 Now you can play with "read-display.py" and "read-write-mjpg-display.py":
 ```
-(_venv3.6) ... $ python read-write-display.py
+(_venv3.6) ... $ python read-write-mjpg-display.py
 ```
+## Install OpenCV that supports H.264
 Unfortunately H.264 is not supported by opencv-python package installed via "pip install" due to license issue (see https://github.com/skvark/opencv-python/issues/81). So we have to compile OpenCV manually to get support for H.264 encoding.
 
 The shell script "install_opencv4_ubuntu16.sh" is taken from "https://www.learnopencv.com/install-opencv-4-on-ubuntu-16-04/". First, install CMake and then run the script "install_opencv4_ubuntu16.sh" to install Open-CV:
