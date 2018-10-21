@@ -15,22 +15,30 @@ frame_height = int(cap.get(4))
  
 # Define the codec and create VideoWriter object.The output is stored in 'outpy.avi' file.
 out = cv2.VideoWriter('video_mjpg.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
+# A counter for frames that have been written to the output file so far
+n_frames = 0
+# The maximum number of frames to be written
+max_number_framed_to_be_saved = 1000
 
 while(True):
   ret, frame = cap.read()
- 
+  
   if ret == True: 
      
     # Write the frame into the file 'output.avi'
     out.write(frame)
- 
+    n_frames += 1
+    print("Frame %d out of %d saved " % (n_frames, max_number_framed_to_be_saved))
+    if n_frames == max_number_framed_to_be_saved:
+      break
+    
     # Display the resulting frame    
     cv2.imshow('Display live video while recording ... Type q to quit',frame)
  
     # Press Q on keyboard to stop recording
     if cv2.waitKey(1) & 0xFF == ord('q'):
       break
- 
+
   # Break the loop
   else:
     break 
