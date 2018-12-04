@@ -1,18 +1,19 @@
 import cv2
 import numpy as np
- 
+
 # Create a VideoCapture object
 cap = cv2.VideoCapture('http://108.53.114.166/mjpg/video.mjpg')
- 
+
 # Check if camera opened successfully
 if (cap.isOpened() == False): 
   print("Unable to read camera feed")
- 
+  exit()
+
 # Default resolutions of the frame are obtained.The default resolutions are system dependent.
 # We convert the resolutions from float to integer.
 frame_width = int(cap.get(3))
 frame_height = int(cap.get(4))
- 
+
 # Define the codec and create VideoWriter object.The output is stored in 'outpy.avi' file.
 out = cv2.VideoWriter('video_mjpg.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
 # A counter for frames that have been written to the output file so far
@@ -42,10 +43,10 @@ while(True):
   # Break the loop
   else:
     break 
- 
+
 # When everything done, release the video capture and video write objects
 cap.release()
 out.release()
- 
+
 # Closes all the frames
 cv2.destroyAllWindows() 

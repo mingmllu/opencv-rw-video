@@ -117,7 +117,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
         -D WITH_QT=ON \
         -D WITH_OPENGL=ON \
         -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
-        -D BUILD_EXAMPLES=ON ..
+        -D BUILD_EXAMPLES=OFF ..
 
 make -j4
 make install
@@ -130,6 +130,6 @@ py3binPath=$(find $cwd/installation/OpenCV-$cvVersion/lib/ -type f -name "cv2.cp
 cd ~/.virtualenvs/OpenCV-$cvVersion-py2/lib/python2.7/site-packages/
 ln -f -s $py2binPath cv2.so
  
-cd ~/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.5/site-packages/
+cd ~/.virtualenvs/OpenCV-$cvVersion-py3/lib/python3.6/site-packages/
 ln -f -s $py3binPath cv2.so
 
