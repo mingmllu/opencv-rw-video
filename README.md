@@ -50,6 +50,8 @@ You can re-run the script "read-write-mjpg-display.py" to generate the MJPG vide
 ```
 $ python read-write-mjpg-display.py
 ```
+> If the script is running but you can't find the output file, probably this is because the CV2 package does not support H.264.
+
 You may compare the file sizes between "video_mjpg.avi" and "video_h264.avi". The size of the H.264 video is much smaller!
 
 To play the videos from the command line, you can install mplayer:
