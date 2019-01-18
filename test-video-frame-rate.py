@@ -3,9 +3,9 @@ import numpy as np
 import time
 
 # Create a VideoCapture object
-cap = cv2.VideoCapture('http://108.53.114.166/mjpg/video.mjpg')
+#cap = cv2.VideoCapture('http://108.53.114.166/mjpg/video.mjpg')
 #cap = cv2.VideoCapture('http://anomaly:lucent@135.104.127.10:58117/mjpg/video.mjpg') # Caffe
-#cap = cv2.VideoCapture('http://root:fitecam@135.222.247.179:9122/mjpg/video.mjpg') # Kiosk
+cap = cv2.VideoCapture('http://root:fitecam@135.222.247.179:9122/mjpg/video.mjpg') # Kiosk
 
 fps = cap.get(cv2.CAP_PROP_FPS)
 print(fps)
