@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import time
+from imutils.video import FPS
 
 # Create a VideoCapture object
 #cap = cv2.VideoCapture('http://108.53.114.166/mjpg/video.mjpg')
@@ -20,11 +21,13 @@ n_frames = 0
 # The maximum number of frames to be written
 max_number_framed_to_be_read = 100
 start_time = time.time()
+fps = FPS().start()
 while(True):
   ret, frame = cap.read()
   if ret == True: 
     n_frames += 1
     print("Frame %d out of %d read " % (n_frames, max_number_framed_to_be_read))
+    fps.update()
     if n_frames == max_number_framed_to_be_read:
       break
 
@@ -33,5 +36,9 @@ while(True):
     break 
 total_time = time.time() - start_time
 print("frame rate = %f"%(n_frames / total_time))
+fps.stop()
+print("[INFO] elasped time: {:.2f}".format(fps.elapsed()))
+print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
+
 # When everything done, release the video capture and video write objects
 cap.release()
