@@ -21,6 +21,8 @@ $ source _venv3.6/bin/activate
 (_venv3.6) ... $ pip install numpy
 
 (_venv3.6) ... $ pip install opencv-python
+
+(_venv3.6) ... $ pip install imutils
 ```
 
 Now you can play with "read-display.py" and "read-write-mjpg-display.py":
