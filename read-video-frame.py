@@ -20,12 +20,18 @@ parser.add_argument("--stride",
                     type=int, 
                     default = 1, 
                     help = "sampling interval")
+parser.add_argument("--skip_frames", 
+                    type=int, 
+                    default = 0, 
+                    help = "The number of frames to be dropped")
 
 args = parser.parse_args()
 
 video_file = args.video_src
 
 stride = args.stride
+
+skip_frames = args.skip_frames
 
 # Create a VideoCapture object
 cap = cv2.VideoCapture(video_file)
@@ -56,8 +62,8 @@ while(True):
       continue
 
     print("Frame %d out of %d read " % (n_frames, max_number_framed_to_be_read))
-    if n_frames >= 0:
-      cv2.imwrite('frame_%05d.jpg'%(n_frames), frame)
+    if n_frames >= skip_frames:
+      cv2.imwrite('frame_%06d.jpg'%(n_frames), frame)
     if n_frames == max_number_framed_to_be_read:
       break
     
