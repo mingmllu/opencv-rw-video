@@ -67,20 +67,21 @@ for fname in list_images:
     if check_before_saving:
         cv2.imshow(fname, img)
         if cv2.waitKey() & 0xFF == ord('y'):
-            list_images_selected.append(img)
+            list_images_selected.append(fname)
         elif cv2.waitKey() & 0xFF == ord('e'):
             break
         cv2.destroyAllWindows()
     else:
-        list_images_selected.append(img)
+        list_images_selected.append(fname)
 
 if list_images_selected:
-    #H,W,_=list_images_selected[0].shape
-    # Define the codec and create VideoWriter object.The output is stored in 'outpy.avi' file.
+    # Define the codec and create VideoWriter object.The output is stored in 'output_filename.avi'.
     fps = args.fps
     output_filename = args.output_filename
     out = cv2.VideoWriter(output_filename+'.avi',cv2.VideoWriter_fourcc('M','J','P','G'), fps, (W,H))
-    for img in list_images_selected:
+    for fname in list_images_selected:
+        img = cv2.imread(fname)
+        img = cv2.resize(img, (W,H), interpolation = cv2.INTER_AREA)
         out.write(img)
         for i in range(args.repetitions-1):
             out.write(img)
