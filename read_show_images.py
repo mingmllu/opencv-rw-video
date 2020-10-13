@@ -2,6 +2,7 @@ import os
 import re
 import cv2
 import argparse
+import numpy as np
 
 parser = argparse.ArgumentParser()
 
@@ -33,12 +34,17 @@ parser.add_argument("--resolution",
                     type=str, 
                     default = '720x1280', 
                     help = "Video resolution, e.g., 720x1280")
+parser.add_argument("--embed_image", 
+                    type=str, 
+                    default = 'No', 
+                    help = "Embed source image in a blank frame")
 
 args = parser.parse_args()
 subtree_path = args.path
 ext_name = args.type
 check_before_saving = True if args.check!='No' else False
 resolution = args.resolution.split('x')
+embed_image = True if args.embed_image=='Yes' else False
 if len(resolution) == 2:
   H, W = resolution
   H, W = int(H), int(W)
@@ -81,7 +87,15 @@ if list_images_selected:
     out = cv2.VideoWriter(output_filename+'.avi',cv2.VideoWriter_fourcc('M','J','P','G'), fps, (W,H))
     for fname in list_images_selected:
         img = cv2.imread(fname)
-        img = cv2.resize(img, (W,H), interpolation = cv2.INTER_AREA)
+        if embed_image and img.shape[0] <= H and img.shape[1] <= W:
+            blank = 255*np.ones((H,W,3),dtype=np.uint8)
+            h, w, _ = img.shape
+            y,x = H//2 - h//2, W//2 - w//2
+            blank[y:(y+h),x:(x+w),:] = img
+            img = blank
+        else:
+            img = cv2.resize(img, (W,H), interpolation = cv2.INTER_AREA)
+            #img = cv2.resize(img, (W,H), interpolation = cv2.INTER_AREA)
         out.write(img)
         for i in range(args.repetitions-1):
             out.write(img)
