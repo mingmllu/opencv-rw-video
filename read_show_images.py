@@ -39,6 +39,19 @@ parser.add_argument("--embed_image",
                     default = 'No', 
                     help = "Embed source image in a blank frame")
 
+def overlay_image_with_text(raw_image, text, origin=None):
+  raw_image_uint8 = raw_image.astype(np.uint8)
+  img_heigth, img_width, _ = raw_image_uint8.shape
+  font = cv2.FONT_HERSHEY_SIMPLEX
+  fontScale = 1
+  thickness = 2
+  fontColor = (0,255,255)
+  (W,H),m = cv2.getTextSize(text, font, fontScale, thickness)
+  if origin is None:
+    origin = (0, H)
+  cv2.putText(raw_image_uint8, text, origin, font, fontScale, fontColor, thickness)
+  return raw_image_uint8
+
 args = parser.parse_args()
 subtree_path = args.path
 ext_name = args.type
@@ -85,10 +98,12 @@ if list_images_selected:
     fps = args.fps
     output_filename = args.output_filename
     out = cv2.VideoWriter(output_filename+'.avi',cv2.VideoWriter_fourcc('M','J','P','G'), fps, (W,H))
+    frame_seqno = -1
     for fname in list_images_selected:
         img = cv2.imread(fname)
+        frame_seqno += 1
         if embed_image and img.shape[0] <= H and img.shape[1] <= W:
-            blank = 255*np.ones((H,W,3),dtype=np.uint8)
+            blank = 0*np.ones((H,W,3),dtype=np.uint8)
             h, w, _ = img.shape
             y,x = H//2 - h//2, W//2 - w//2
             blank[y:(y+h),x:(x+w),:] = img
@@ -96,6 +111,7 @@ if list_images_selected:
         else:
             img = cv2.resize(img, (W,H), interpolation = cv2.INTER_AREA)
             #img = cv2.resize(img, (W,H), interpolation = cv2.INTER_AREA)
+        img = overlay_image_with_text(img, str(frame_seqno))
         out.write(img)
         for i in range(args.repetitions-1):
             out.write(img)
